@@ -44,7 +44,7 @@ STATIONS = {
     "Meteo": station_meteo,
     #"Opérations": NotAvailable(),
     #"Visualisations": NotAvailable()
-    "Message Operationel": station_message_op 
+    "Messages Opérationels": station_message_op
 }
 
 #------------------------------------#
