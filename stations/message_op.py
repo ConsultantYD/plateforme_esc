@@ -10,6 +10,7 @@ from env_canada import ECWeather
 import datetime as dt
 import streamlit as st
 import base64
+from os.path import join
 
 from email import generator
 from email.mime.multipart import MIMEMultipart
@@ -62,6 +63,8 @@ def replace_text_in_paragraph(paragraph, key, value):
 def write(**kwargs):
 
     st.title("Messages Opérationnels")
+    img_col,_,_ = st.columns((1,4,4))
+    img_col.image(join("stations",'visual_mo.png'))
 
     # DATA ACQUISITION
     message_types = [
