@@ -65,7 +65,8 @@ def write(data_dict: dict, **kwargs):
     alrt_count = 0
     for k, v in alerts.items():
         if len(v["value"]) > 0:
-            st.write(v["label"] + ": " + v["value"])
+            for a in range(len(v["value"])):
+                st.write(v["label"] + ": " + v["value"][a]["title"])
             alrt_count += 1
     if alrt_count == 0:
         st.write("Aucune alertes.")
@@ -74,7 +75,7 @@ def write(data_dict: dict, **kwargs):
     # Metrics
     col01, col02, col03, col04, col05, _ = st.columns((1, 1, 1, 1, 1, 2))
     T = cond_dict['Température (C)']
-    Humidex = cond_dict["Humidex"]
+    Humidex = cond_dict["Humidex"] if cond_dict["Humidex"] is not None else T
     dT = round(Humidex - T)
     col01.metric("Température (ºC)", T)
     col02.metric("Humidex", Humidex, dT, delta_color="inverse")

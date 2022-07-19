@@ -20,6 +20,7 @@ import os
 from stations import accueil as station_accueil
 from stations import meteo as station_meteo
 from stations import message_op as station_message_op
+from stations import journal_de_bord as j_de_b
 
 
 @st.cache(allow_output_mutation=True)
@@ -39,12 +40,13 @@ class NotAvailable():
 
 # Stations dictionary
 STATIONS = {
-    "Accueil": station_accueil,
+    #"Accueil": station_accueil,
     #"Admin": NotAvailable(),
     "Meteo": station_meteo,
     #"Opérations": NotAvailable(),
     #"Visualisations": NotAvailable()
-    "Messages Opérationels": station_message_op
+    "Messages Opérationels": station_message_op,
+    "Journal de Bord": j_de_b
 }
 
 #------------------------------------#
