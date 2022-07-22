@@ -35,9 +35,9 @@ from os.path import isfile, join
 def write(data_dict: dict, **kwargs):
 
     # DATA ACQUISITION
-    st.title('Journal de bord')
-    img_col,_,_ = st.columns((1,4,4))
-    img_col.image(join("stations",'visual_jb.png'))
+    img_col, title_col = st.columns((1, 5))
+    img_col.image(join("stations", 'visual_jb.png'))
+    title_col.title('Journal de bord')
     st.info("Cette page est en cours de développement.")
 
     coord_base = (46.046528, -73.116527)

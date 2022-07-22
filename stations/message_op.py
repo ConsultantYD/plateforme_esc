@@ -62,9 +62,9 @@ def replace_text_in_paragraph(paragraph, key, value):
 
 def write(**kwargs):
 
-    st.title("Messages Opérationnels")
-    img_col,_,_ = st.columns((1,4,4))
-    img_col.image(join("stations",'visual_mo.png'))
+    img_col, title_col, = st.columns((1, 5))
+    img_col.image(join("stations", 'visual_mo.png'))
+    title_col.title("Messages Opérationnels")
 
     # DATA ACQUISITION
     message_types = [
@@ -96,9 +96,12 @@ def write(**kwargs):
     }
 
     msg_type = st.selectbox('Choisir type de message', message_types)
+    if msg_type == "Message de début des opérations":
+        patron = st.selectbox(
+            "Choisir patron", ['Justin Ferrandez', 'Leo Croufer'])
     st.header(msg_type)
 
-    col1, col2 = st.columns((1, 10))
+    col1, col2 = st.columns((1, 20))
     with col2:
         if message_to[msg_type] is not None:
             st.subheader("À")
@@ -140,6 +143,8 @@ def write(**kwargs):
             asyncio.run(ec_fr.update())
 
             wind_sp = str(ec_fr.conditions['wind_speed']['value'])
+            wind_sp_kn = str(
+                round(ec_fr.conditions['wind_speed']['value'] / 1.852, 1))
             wind_gust = str(ec_fr.conditions['wind_gust']['value'])
             if wind_gust == "None":
                 wind_gust = wind_sp
@@ -149,9 +154,11 @@ def write(**kwargs):
                 "${DATE}": now.strftime("%Y-%m-%d"),
                 "${WIND_DIR}": ec_fr.conditions['wind_dir']['value'],
                 "${WIND_SP}": wind_sp,
+                "${WIND_SP_KN}": wind_sp_kn,
                 "${WIND_GUST}": wind_gust,
                 "${VISIBILITY}": "10",
                 "${TEMP}": temperature,
+                "${PATRON}": patron
             }
 
             template_document = Document(template_file_path)

@@ -18,6 +18,7 @@ import os
 
 # STATIONS
 from stations import accueil as station_accueil
+from stations import ais as station_ais
 from stations import meteo as station_meteo
 from stations import message_op as station_message_op
 from stations import journal_de_bord as j_de_b
@@ -46,6 +47,7 @@ STATIONS = {
     #"Opérations": NotAvailable(),
     #"Visualisations": NotAvailable()
     "Messages Opérationels": station_message_op,
+    "AIS": station_ais,
     "Journal de Bord": j_de_b
 }
 
@@ -110,7 +112,7 @@ def main():
 
 if __name__ == "__main__":
 
-    st.set_page_config(layout='wide')
+    st.set_page_config()
     main()
 
 ################################################################################

@@ -26,8 +26,7 @@ def write(**kwargs):
     #------------------#
     #- SATELLITE VIEW -#
     #------------------#
-    st.title("Accueil")
-    st.info("Cette page est en cours de développement.")
+    st.title("AIS")
 
     coord_base = (46.046528, -73.116527)
     coord_boat = (46.047640, -73.116527)

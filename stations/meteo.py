@@ -35,12 +35,11 @@ from os.path import isfile, join
 def write(data_dict: dict, **kwargs):
 
     # DATA ACQUISITION
-    st.title('Meteo')
-    img_col, _, _ = st.columns((1, 4, 4))
+    img_col, title_col = st.columns((1, 5))
     img_col.image(join("stations", 'visual_meteo.png'))
+    title_col.title('Meteo')
 
     coord_base = (46.046528, -73.116527)
-    coord_boat = (46.047640, -73.116527)
 
     ec_fr = ECWeather(coordinates=coord_base, language='french')
 
@@ -60,7 +59,7 @@ def write(data_dict: dict, **kwargs):
         else:
             cond_dict[v["label"]] = v["value"]
 
-    st.subheader("Conditions actuelles")
+    st.header("Conditions actuelles")
     # Alerts
     alrt_count = 0
     for k, v in alerts.items():
@@ -73,7 +72,7 @@ def write(data_dict: dict, **kwargs):
     #st.write(alerts)
 
     # Metrics
-    col01, col02, col03, col04, col05, _ = st.columns((1, 1, 1, 1, 1, 2))
+    col01, col02, col03, col04 = st.columns(4)
     T = cond_dict['Température (C)']
     Humidex = cond_dict["Humidex"] if cond_dict["Humidex"] is not None else T
     dT = round(Humidex - T)
@@ -85,9 +84,8 @@ def write(data_dict: dict, **kwargs):
     st.write(cond_dict["Prévision"])
     #st.write(cond_dict)
 
-    st.subheader("Prévisions à court terme (8h)")
+    st.header("Prévisions à court terme (8h)")
     if st.checkbox("Montrer les prévisions court terme", True):
-        col11, col12, _ = st.columns((3, 3, 1))
 
         # Forecast (hourly)
         t_h_forecast = []
@@ -105,34 +103,34 @@ def write(data_dict: dict, **kwargs):
         #precip_h_forecast = np.random.uniform(0, 1, size=24) * 100
         #precip_h_forecast = np.round(precip_h_forecast, 2)
         df = pd.DataFrame({
-            "time": t_h_forecast,
+            "temps": t_h_forecast,
             "temperature": temp_h_forecast,
             "precipitations": precip_h_forecast
         })
 
         # Temperatures
-        fig11 = px.line(df.iloc[0:8], x="time",
+        fig11 = px.line(df.iloc[0:8], x="temps",
                         y="temperature", text="temperature")
         fig11.update_traces(textposition="bottom center", line_color='#ff0000')
         fig11.update_layout({
             "plot_bgcolor": "rgba(0,0,0,0)"
         })
-        col11.markdown("**Température**")
-        col11.plotly_chart(fig11)
+        st.markdown("**Température**")
+        st.plotly_chart(fig11)
 
         # Pourcentage de précipitations
         fig12 = px.bar(df.iloc[0:8], y='precipitations',
-                       x='time', text='precipitations')
+                       x='temps', text='precipitations')
         fig12.update_traces(texttemplate='%{text:.2s}', textposition='outside')
         fig12.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
         fig12.update_layout({
             "plot_bgcolor": "rgba(0,0,0,0)",
             "yaxis_range": [0, 100]
         })
-        col12.markdown("**Probabilités d'averses**")
-        col12.plotly_chart(fig12, use_container_width=True)
+        st.markdown("**Probabilités d'averses**")
+        st.plotly_chart(fig12, use_container_width=True)
 
-    st.subheader("Prévisions à long terme (7 jours)")
+    st.header("Prévisions à long terme (7 jours)")
     if st.checkbox("Montrer les prévisions long terme"):
         st.write("En développement.")
 
